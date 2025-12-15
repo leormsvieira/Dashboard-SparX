@@ -70,51 +70,59 @@ Dentre os arquivos e pastas presentes na raiz do projeto, definem-se:
 ```
 Dashboard-SparX/
 │
-├── esp32-device/                    # Código-fonte para o dispositivo IoT (ESP32)
-│   └── ...                          # Arquivos de firmware
+├── esp32-device/                  # Código do firmware
+│   ├── pipipi.ino
+│   └── sparx_temperature_monitor.ino
 │
-├── src/                             # Código-fonte da aplicação web (React/TypeScript)
-│   └── ...                          # Componentes, páginas e lógica do frontend
+├── public/                        # [NOVO] Arquivos estáticos públicos
+│   └── parana.json                # (Movido da raiz - se for carregado via fetch)
 │
-├── supabase/                        # Configurações e migrações do banco de dados Supabase
-│   └── ...                          # Arquivos SQL e de configuração
+├── scripts/                       # Scripts auxiliares de automação/teste
+│   ├── run-migrations.js          # (Movido da raiz)
+│   └── test-integration.js        # (Movido da raiz)
 │
-├── mqtt-bridge.js                   # Script de ponte MQTT para processamento de dados
-├── package.json                     # Metadados e dependências do projeto
-├── vite.config.ts                   # Configuração do bundler Vite
-└── README.md                        # Este arquivo
+├── src/                           # Código-fonte da aplicação React
+│   ├── assets/                    # (Movido da raiz) Imagens (inteli.png, shelley.jpg)
+│   ├── components/                # Componentes UI (botões, cards, charts)
+│   ├── data/                      # (Opcional) JSONs importados diretamente no código
+│   ├── hooks/                     # Custom hooks
+│   ├── lib/                       # Configurações de libs (utils, axios, supabase client)
+│   ├── pages/                     # Rotas/Páginas da aplicação
+│   ├── styles/                    # (Opcional) CSS global se quiser separar do index.css
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── vite-env.d.ts
+│
+├── supabase/                      # Backend Supabase
+│   ├── functions/                 # Edge Functions
+│   ├── migrations/                # Histórico de schema
+│   ├── queries/                   # [NOVO] Pasta para organizar seus SQLs soltos
+│   │   ├── add-prototype-device.sql
+│   │   ├── verify_map_data.sql
+│   │   ├── quick_test_readings.sql
+│   │   └── USEFUL_QUERIES.sql
+│   └── config.toml
+│
+├── .env                           # Variáveis de ambiente
+├── .gitignore
+├── components.json                # Config do shadcn/ui
+├── eslint.config.js
+├── index.html                     # Ponto de entrada do Vite
+├── mqtt-bridge.js                 # Script principal da ponte MQTT (Mantido na raiz como pedido)
+├── package.json
+├── postcss.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+└── vite.config.ts
 ```
 
 ## 🔧 Instalação
 
 ### Pré-requisitos
 
-&ensp;Antes de iniciar a instalação do SparX, certifique-se de ter os seguintes componentes e ferramentas:
-
-#### Hardware Necessário
-
-- **ESP32 DevKit V1** - Microcontrolador principal
-- **Sensor DS18B20** - Sensor de temperatura digital
-- **Display LCD I2C 16x2** (endereço 0x27)
-- **LED RGB** - Indicador visual de status
-- **3 Resistores de 220Ω** (para os LEDs)
-- **1 Resistor de 4.7kΩ** (pull-up para o DS18B20)
-- **1 Pushbutton** (botão de reset)
-- **Protoboard e jumpers** para montagem do circuito
-- **Cabo USB** para programação do ESP32
+&ensp;Antes de iniciar a instalação da Dashboard, certifique-se de ter os seguintes componentes e ferramentas:
 
 #### Software e Ferramentas
-
-**Para o Firmware (ESP32):**
-
-- **Arduino IDE** versão 2.0 ou superior
-  - Download: https://www.arduino.cc/en/software
-- **Bibliotecas Arduino necessárias:**
-  - `OneWire` - Comunicação com sensor DS18B20
-  - `DallasTemperature` - Leitura do sensor DS18B20
-  - `LiquidCrystal_I2C` - Controle do display LCD
-  - `Wire` - Comunicação I2C
-  - **Biblioteca MQTT** - Para comunicação com o HiveMQ.
 
 **Serviços em Nuvem:**
 - **Broker MQTT HiveMQ**
@@ -122,7 +130,7 @@ Dashboard-SparX/
 - **Supabase** (para banco de dados PostgreSQL)
   - Registro: https://supabase.com
 
-### Instalação do Frontend/Backend (Dashboard)
+### Instalação do Dashboard
 
 1.  **Clonar o Repositório:**
     ```bash
