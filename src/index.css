@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Industrial Dark Theme - SparX IoT Monitoring */
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary: Industrial Orange */
+    --primary: 15 100% 60%;
+    --primary-foreground: 0 0% 0%;
+    
+    /* Secondary: Electric Yellow */
+    --secondary: 39 100% 50%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 15 100% 60%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Status Colors */
+    --status-adequado: 120 60% 50%;
+    --status-precario: 45 100% 50%;
+    --status-critico: 0 85% 60%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 15 100% 60%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(15 100% 60%), hsl(39 100% 50%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 10%), hsl(0 0% 7%));
+    
+    /* Shadows */
+    --shadow-glow-orange: 0 0 30px hsla(15, 100%, 60%, 0.3);
+    --shadow-glow-yellow: 0 0 30px hsla(39, 100%, 50%, 0.3);
+    --shadow-card: 0 10px 40px -10px hsla(0, 0%, 0%, 0.5);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Leaflet Map Customization */
+.leaflet-container {
+  background: #1a1a1a !important;
+  font-family: inherit;
+  z-index: 0;
+}
+
+.leaflet-popup-content-wrapper {
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border-radius: var(--radius);
+  border: 1px solid hsl(var(--border));
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  min-width: 280px;
+}
+
+.leaflet-popup-tip {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+}
+
+.leaflet-control-zoom a {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: hsl(var(--muted)) !important;
+}
+
+.leaflet-control-attribution {
+  background: hsl(var(--card)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+  border-top: 1px solid hsl(var(--border)) !important;
+  font-size: 10px;
+}
+
+.leaflet-control-attribution a {
+  color: hsl(var(--primary)) !important;
+}
+
+/* Custom marker styles */
+.custom-marker-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Prototype marker pulse animation */
+.prototype-marker {
+  animation: prototypePulse 2s ease-in-out infinite;
+}
+
+@keyframes prototypePulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255, 107, 53, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 107, 53, 0.9));
+  }
+}
+
+/* Hover effect for all markers */
+.custom-marker-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* Inline pulse animation for marker content */
+@keyframes pulse {
+  0%, 100% {
+    transform: rotate(-45deg) scale(1);
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.05);
+  }
+}
