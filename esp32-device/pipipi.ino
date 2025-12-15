@@ -3,15 +3,16 @@
 #include <DallasTemperature.h>
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
-#include "UbidotsEsp32Mqtt.h"
+// #include "UbidotsEsp32Mqtt.h" // Removido: Usar biblioteca MQTT genérica (e.g., PubSubClient)
 
-// --- CONFIGURAÇÕES UBIDOTS E WIFI ---
-const char *UBIDOTS_TOKEN = "BBUS-vy5q4l1Dar3mvQKBxtpY02Y9bCvpWW";
+// --- CONFIGURAÇÕES MQTT (HiveMQ) E WIFI ---
+// const char *UBIDOTS_TOKEN = "BBUS-vy5q4l1Dar3mvQKBxtpY02Y9bCvpWW"; // Token Ubidots removido
 const char *WIFI_SSID = "Inteli.Iot";
 const char *WIFI_PASS = "%(Yk(sxGMtvFEs.3";
-const char *DEVICE_LABEL = "esp32-transformador-prototype";
+const char *MQTT_TOPIC = "sparx/data"; // Tópico MQTT para publicação
+// const char *DEVICE_LABEL = "esp32-transformador-prototype"; // Não mais necessário
 
-Ubidots ubidots(UBIDOTS_TOKEN);
+// Ubidots ubidots(UBIDOTS_TOKEN); // Removido: Usar cliente MQTT genérico
 
 // --- DEFINIÇÕES DE PINOS ---
 // LED RGB —> substitui os LEDs antigos
@@ -32,8 +33,8 @@ float temperature = 0.0;
 int currentStatus = 0;
 unsigned long lastReadTime = 0;
 const long readInterval = 2000;
-unsigned long lastUbidotsTime = 0;
-const long ubidotsInterval = 5000;
+unsigned long lastMqttTime = 0; // Substituído de lastUbidotsTime
+const long mqttInterval = 5000; // Substituído de ubidotsInterval
 volatile bool reset_flag = false;
 
 // --- LIMITES DE TEMPERATURA ---
@@ -102,10 +103,11 @@ void setup() {
   lcd.setCursor(0, 0);
   lcd.print("Conectando WiFi");
 
-  ubidots.connectToWifi(WIFI_SSID, WIFI_PASS);
-  ubidots.setCallback(callback);
-  ubidots.setup();
-  ubidots.reconnect();
+  // Lógica de conexão WiFi (WiFi.begin) deve ser implementada aqui.
+  // ubidots.connectToWifi(WIFI_SSID, WIFI_PASS);
+  // ubidots.setCallback(callback);
+  // ubidots.setup();
+  // ubidots.reconnect(); // Lógica de reconexão MQTT deve ser implementada aqui.
 
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -195,8 +197,8 @@ void updateLcd(float temp) {
 }
 
 void loop() {
-  if (!ubidots.connected()) ubidots.reconnect();
-  ubidots.loop();
+  // if (!ubidots.connected()) ubidots.reconnect(); // Lógica de reconexão MQTT
+  // ubidots.loop(); // Lógica de loop MQTT
 
   unsigned long currentTime = millis();
 
@@ -223,14 +225,14 @@ void loop() {
     updateLcd(temperature);
   }
 
-  // --- ENVIO UBIDOTS ---
-  if (currentTime - lastUbidotsTime >= ubidotsInterval) {
-    lastUbidotsTime = currentTime;
+  // --- ENVIO MQTT (HiveMQ) ---
+  if (currentTime - lastMqttTime >= mqttInterval) {
+    lastMqttTime = currentTime;
 
-    if (temperature != -999.0 && ubidots.connected()) {
-      ubidots.add("temperatura", temperature);
-      ubidots.add("status_alerta", currentStatus);
-      ubidots.publish(DEVICE_LABEL);
+    if (temperature != -999.0 /* && mqttClient.connected() */) {
+      // Construir payload JSON para MQTT
+      // Construir payload JSON para MQTT
+      // mqttClient.publish(MQTT_TOPIC, payload); // Publicar no HiveMQ
     }
   }
 
