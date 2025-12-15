@@ -156,66 +156,6 @@ Dashboard-SparX/
     ```
     O dashboard estará acessível em `http://localhost:8080/`.
 
-### Instalação do Firmware no ESP32
-
-#### Passo 1: Configurar o Arduino IDE
-
-1. Abra o Arduino IDE
-2. Vá em **File > Preferences**
-3. Em "Additional Board Manager URLs", adicione:
-   ```
-   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-   ```
-4. Vá em **Tools > Board > Boards Manager**
-5. Procure por "esp32" e instale **"ESP32 by Espressif Systems"**
-
-#### Passo 2: Instalar as Bibliotecas
-
-1. Vá em **Sketch > Include Library > Manage Libraries**
-2. Instale as seguintes bibliotecas:
-   - `OneWire` por Paul Stoffregen
-   - `DallasTemperature` por Miles Burton
-   - `LiquidCrystal I2C` por Frank de Brabander
-   - **Instale uma biblioteca MQTT compatível com ESP32** (e.g., `PubSubClient` ou similar)
-
-#### Passo 3: Configurar as Credenciais
-
-1. Abra o arquivo de firmware desejado (e.g., `esp32-device/main.ino`)
-2. Edite as seguintes linhas com suas credenciais:
-
-```cpp
-const char *WIFI_SSID = "NOME_DA_SUA_REDE_WIFI";
-const char *WIFI_PASS = "SENHA_DA_SUA_REDE_WIFI";
-const char *MQTT_SERVER = "URL_DO_BROKER_HIVEMQ";
-const char *MQTT_USER = "SEU_USUARIO_MQTT";
-const char *MQTT_PASS = "SUA_SENHA_MQTT";
-```
-
-#### Passo 4: Montar o Circuito
-
-Conecte os componentes de acordo com o esquema elétrico fornecido (verifique a pasta de assets).
-
-#### Passo 5: Fazer Upload do Código
-
-1. Conecte o ESP32 ao computador via USB
-2. No Arduino IDE, selecione:
-   - **Tools > Board > ESP32 Dev Module**
-   - **Tools > Port** → Selecione a porta COM do ESP32
-3. Clique em **Upload** (seta para direita)
-4. Aguarde a compilação e upload do código
-
-#### Passo 6: Monitorar o Funcionamento
-
-1. Abra o **Serial Monitor** (Tools > Serial Monitor)
-2. Configure a velocidade para **115200 baud**
-3. Observe as leituras de temperatura e status do sistema
-
-
-### Manual de Instruções Completo
-
-Para informações detalhadas sobre instalação, operação e manutenção do sistema, consulte a documentação completa (verifique a pasta `document/`).
-
-
 ## 🗃 Histórico de lançamentos
 
 * 0.5.0 - 17/12/2025
