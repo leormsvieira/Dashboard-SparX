@@ -3,7 +3,7 @@
 
 const SUPABASE_URL = 'https://ulsdpggzsebmmvxdadxd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVsc2RwZ2d6c2VibW12eGRhZHhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxNzE0ODEsImV4cCI6MjA3OTc0NzQ4MX0.CIqJ8X3rtgT8s0XEw3HRsAbuvvVsxhK8sktAhXaHw6A';
-const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/ubidots-webhook`;
+const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/mqtt-webhook`; // Renomeado de ubidots-webhook para mqtt-webhook
 
 console.log('🧪 SparX Integration Test\n');
 console.log('='.repeat(50));
@@ -167,7 +167,7 @@ async function runAllTests() {
   console.log('📚 Próximos passos:');
   console.log('1. Se todos os testes passaram, configure o ESP32');
   console.log('2. Veja esp32-device/README.md para instruções');
-  console.log('3. Configure o webhook no Ubidots');
+  console.log('3. Configure o webhook para o backend');
   console.log('4. Veja MQTT_INTEGRATION.md para guia completo\n');
 }
 
