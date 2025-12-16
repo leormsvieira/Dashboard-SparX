@@ -1,7 +1,7 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="src/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0" width=40% height=40%></a>
+<a href= "https://www.inteli.edu.br/"><img src="assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0" width=40% height=40%></a>
 </p>
 
 <br>
@@ -12,7 +12,7 @@
 
 <div align="center">
 
-  <img src="src/assets/shelley.jpg"><br>
+  <img src="assets/shelley.jpg"><br>
 </div>
 
 ## 👨‍🎓 Integrantes: 
@@ -44,24 +44,17 @@
 
 ## 📜 Descrição
 
-&ensp;O SparX é um sistema inteligente de monitoramento térmico desenvolvido para a Companhia Paranaense de Energia (COPEL), com o objetivo de revolucionar a gestão preventiva de transformadores na rede de distribuição elétrica. A solução integra tecnologias de Internet das Coisas, análise preditiva e visualização de dados em tempo real para prevenir falhas, otimizar manutenções e prolongar a vida útil dos equipamentos críticos da infraestrutura elétrica.
+&ensp;O **SparX Dashboard** é a interface web para monitoramento e análise térmica de transformadores. Construído em React + TypeScript (Vite + Tailwind), o dashboard oferece visualização em tempo real de leituras, indicadores de alerta por faixa de temperatura, gráficos de tendência, tabelas e um mapa interativo com geolocalização dos dispositivos.
 
-&ensp;A problemática enfrentada pela COPEL decorre da ausência de mecanismos contínuos e inteligentes de monitoramento térmico dos transformadores. Esses equipamentos sofrem desgastes resultantes de sobreaquecimento, sobrecarga e intempéries climáticas, fatores que frequentemente conduzem a interrupções no fornecimento de energia e elevação dos custos operacionais com manutenções corretivas ou substituições emergenciais. O SparX surge como resposta a esse desafio, transformando a gestão reativa em uma abordagem proativa e baseada em dados.
+&ensp;Principais recursos:
 
-&ensp;A arquitetura da solução é composta por três componentes principais integrados. O primeiro é o dispositivo IoT baseado em ESP32 DevKit V1, equipado com sensor de temperatura digital DS18B20, que realiza medições periódicas e transmite os dados via protocolo MQTT. O dispositivo incorpora um sistema visual de alertas com LEDs coloridos que indicam rapidamente o nível de risco de superaquecimento, permitindo identificação imediata de problemas mesmo em campo. 
+- Visualização em tempo real e alertas (verde / amarelo / vermelho);
 
-&ensp;O segundo componente é a infraestrutura de comunicação e processamento, que utiliza o broker **HiveMQ** para gerenciar o fluxo de mensagens MQTT com alta confiabilidade e baixa latência. O backend desenvolvido em Node.js com Express processa os dados recebidos, implementa a lógica de alertas baseada em faixas de temperatura e gerencia a autenticação via JWT. O banco de dados PostgreSQL, disponibilizado através do **Supabase**, armazena o histórico completo de medições, permitindo análises preditivas e acompanhamento do desempenho operacional ao longo do tempo.
+- Map view com acesso rápido ao histórico de cada dispositivo;
 
-&ensp;O terceiro componente é a plataforma web interativa desenvolvida em React com TypeScript, que oferece aos operadores da COPEL uma interface centralizada e intuitiva para monitoramento em tempo real. O dashboard apresenta painéis com medições atualizadas, alertas automáticos, tendências térmicas e histórico de dados exportáveis. A interface também incorpora mapa interativo com geolocalização dos transformadores, facilitando significativamente a atuação das equipes de manutenção em campo ao priorizar intervenções com base no histórico térmico de cada equipamento.
+- Gráficos de tendência e exportação de dados;
 
-&ensp;O sistema de alertas do SparX opera em quatro níveis distintos. O status verde indica temperatura adequada, representando operação normal do transformador. O status amarelo sinaliza temperatura precária, demandando atenção e monitoramento mais frequente. O status vermelho indica temperatura crítica, exigindo intervenção imediata para prevenir falhas. Adicionalmente, o sistema detecta e reporta falhas no próprio sensor, garantindo a confiabilidade das medições.
-
-&ensp;Os benefícios trazidos pelo SparX são significativos e mensuráveis. A solução aumenta a confiabilidade da rede ao monitorar continuamente a temperatura dos transformadores, reduzindo falhas críticas e interrupções no fornecimento de energia. Possibilita manutenção proativa, permitindo que as equipes priorizem ações com base em dados concretos ao invés de agir apenas reativamente. Gera dados estratégicos para análises avançadas e otimização da gestão de ativos, contribuindo para decisões mais informadas. Reduz custos operacionais ao diminuir manutenções corretivas emergenciais e prolongar a vida útil dos transformadores. A integração à infraestrutura existente da COPEL garante monitoramento remoto seguro, contínuo e eficiente, aproveitando os investimentos já realizados em redes inteligentes.
-
-&ensp;Dessa forma, a solução representa um avanço tecnológico e uma transformação na forma como concessionárias de energia podem gerenciar seus ativos críticos, trazendo mais segurança, eficiência e previsibilidade para a operação da rede elétrica.
-
-[Vídeo de demonstração do projeto]()
-
+- Integração com Supabase para persistência e com pipeline MQTT/edge functions para ingestão de dados.
 
 ## 📁 Estrutura de pastas
 
@@ -74,21 +67,20 @@ Dashboard-SparX/
 │   ├── pipipi.ino
 │   └── sparx_temperature_monitor.ino
 │
-├── public/                        # [NOVO] Arquivos estáticos públicos
-│   └── parana.json                # (Movido da raiz - se for carregado via fetch)
+├── public/                        # Arquivos estáticos públicos
+│   └── parana.json                
 │
 ├── scripts/                       # Scripts auxiliares de automação/teste
-│   ├── run-migrations.js          # (Movido da raiz)
-│   └── test-integration.js        # (Movido da raiz)
+│   ├── run-migrations.js          
+│   └── test-integration.js        
 │
 ├── src/                           # Código-fonte da aplicação React
-│   ├── assets/                    # (Movido da raiz) Imagens (inteli.png, shelley.jpg)
 │   ├── components/                # Componentes UI (botões, cards, charts)
-│   ├── data/                      # (Opcional) JSONs importados diretamente no código
+│   ├── data/                      # JSONs importados diretamente no código
 │   ├── hooks/                     # Custom hooks
 │   ├── lib/                       # Configurações de libs (utils, axios, supabase client)
 │   ├── pages/                     # Rotas/Páginas da aplicação
-│   ├── styles/                    # (Opcional) CSS global se quiser separar do index.css
+│   ├── styles/                    # CSS global se quiser separar do index.css
 │   ├── App.tsx
 │   ├── main.tsx
 │   └── vite-env.d.ts
@@ -96,7 +88,7 @@ Dashboard-SparX/
 ├── supabase/                      # Backend Supabase
 │   ├── functions/                 # Edge Functions
 │   ├── migrations/                # Histórico de schema
-│   ├── queries/                   # [NOVO] Pasta para organizar seus SQLs soltos
+│   ├── queries/                   # Pasta para organizar seus SQLs soltos
 │   │   ├── add-prototype-device.sql
 │   │   ├── verify_map_data.sql
 │   │   ├── quick_test_readings.sql
@@ -108,7 +100,7 @@ Dashboard-SparX/
 ├── components.json                # Config do shadcn/ui
 ├── eslint.config.js
 ├── index.html                     # Ponto de entrada do Vite
-├── mqtt-bridge.js                 # Script principal da ponte MQTT (Mantido na raiz como pedido)
+├── mqtt-bridge.js                 # Script principal da ponte MQTT 
 ├── package.json
 ├── postcss.config.js
 ├── tailwind.config.ts
