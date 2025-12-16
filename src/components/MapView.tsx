@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap } from "react-leaflet";
 import L from "leaflet";
 import { Device } from "@/hooks/useDevices";
@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Thermometer, MapPin, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
-import paranaGeoJSON from "../../parana.json";
+// GeoJSON is served from `public/parana.json` — fetch it at runtime to avoid
+// bundling a very large JSON into the JS bundle.
 
 // Fix para ícones do Leaflet não aparecerem
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -98,6 +99,30 @@ interface MapViewProps {
 export const MapView = ({ devices, selectedDeviceId, onDeviceSelect }: MapViewProps) => {
   const navigate = useNavigate();
   const mapRef = useRef<L.Map | null>(null);
+  const [paranaGeoJSON, setParanaGeoJSON] = useState<any | null>(null);
+
+  useEffect(() => {
+    // Use Vite base URL to support serving from a subpath in production
+    const baseUrl = (import.meta as any)?.env?.BASE_URL ?? '/';
+    const url = `${baseUrl}parana.json`;
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status} while loading ${url}`);
+        return res.json();
+      })
+      .then((json) => {
+        // Basic validation so we know why it might not render
+        if (json && (json.type === 'FeatureCollection' || Array.isArray(json.features))) {
+          console.log(`parana.json carregado (${json.features?.length ?? 'n/a'} features)`);
+          setParanaGeoJSON(json);
+        } else {
+          console.error('parana.json carregado, mas formato inesperado', json);
+          setParanaGeoJSON(null);
+        }
+      })
+      .catch((err) => console.error('Erro ao carregar parana.json', err));
+  }, []);
 
   // Filtrar apenas dispositivos com coordenadas válidas
   const devicesWithCoordinates = devices.filter(
@@ -165,17 +190,19 @@ export const MapView = ({ devices, selectedDeviceId, onDeviceSelect }: MapViewPr
           maxZoom={19}
         />
 
-        {/* Destaque do estado do Paraná com GeoJSON */}
-        <GeoJSON
-          data={paranaGeoJSON as any}
-          style={{
-            color: "#ff6b35",        // Laranja SparX para a borda
-            weight: 2,               // Espessura da borda
-            opacity: 0.6,            // Opacidade da borda
-            fillColor: "#ff6b35",    // Laranja SparX para o preenchimento
-            fillOpacity: 0.5,        // Opacidade de 50% conforme solicitado
-          }}
-        />
+        {/* Destaque do estado do Paraná com GeoJSON (carregado em runtime de /parana.json) */}
+        {paranaGeoJSON && (
+          <GeoJSON
+            data={paranaGeoJSON as any}
+            style={{
+              color: "#ff6b35",        // Laranja SparX para a borda
+              weight: 2,               // Espessura da borda
+              opacity: 0.6,            // Opacidade da borda
+              fillColor: "#ff6b35",    // Laranja SparX para o preenchimento
+              fillOpacity: 0.5,        // Opacidade de 50% conforme solicitado
+            }}
+          />
+        )}
 
         {/* Marcadores dos dispositivos */}
         {devicesWithCoordinates.map((device) => {

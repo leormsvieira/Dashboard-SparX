@@ -213,13 +213,6 @@ const Devices = () => {
             const isPrototype = device.serial_number === "esp32-transformador-prototype";
             return (
               <div key={device.id} className="relative">
-                {isPrototype && (
-                  <div className="absolute -top-3 -right-3 z-10">
-                    <Badge className="bg-primary text-primary-foreground shadow-lg animate-pulse">
-                      🟠 Protótipo Funcional
-                    </Badge>
-                  </div>
-                )}
                 <DeviceCard
                   device={device}
                   onClick={() => setSelectedDeviceId(device.id)}

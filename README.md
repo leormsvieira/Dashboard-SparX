@@ -1,7 +1,7 @@
 # Inteli - Instituto de Tecnologia e Liderança 
 
 <p align="center">
-<a href= "https://www.inteli.edu.br/"><img src="assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0" width=40% height=40%></a>
+<a href= "https://www.inteli.edu.br/"><img src="src/assets/inteli.png" alt="Inteli - Instituto de Tecnologia e Liderança" border="0" width=40% height=40%></a>
 </p>
 
 <br>
@@ -12,7 +12,7 @@
 
 <div align="center">
 
-  <img src="assets/shelley.jpg"><br>
+  <img src="src/assets/shelley.jpg"><br>
 </div>
 
 ## 👨‍🎓 Integrantes: 
